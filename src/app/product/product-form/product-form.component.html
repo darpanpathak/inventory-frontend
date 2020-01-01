@@ -1,0 +1,56 @@
+<div>
+    <h1> {{ form.get('id').value == 0 ? "Create new product" : "Update Existing Product" }} </h1>
+
+    <form [formGroup]="form">
+        <fieldset>
+            <div class="form-group">
+                <label for="productname">Product name</label>
+                <input type="text" class="form-control" id="productname" aria-describedby="productname" formControlName="name" placeholder="Enter product name here" [ngClass]="{'is-invalid': name.invalid && name.touched}">
+
+                <div class="invalid-feedback">
+                    <div [hidden]="!(name.invalid && form.dirty && name.touched && name.errors.required)">
+                        <i class="bx bx-radio-circle"></i> Product name is required
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="productprice">Product price</label>
+                <input type="number" class="form-control" id="productprice" aria-describedby="productprice" formControlName="price" placeholder="Enter product price here" [ngClass]="{'is-invalid': price.invalid && price.touched}">
+
+                <div class="invalid-feedback">
+                    <div [hidden]="!(price.invalid && form.dirty && price.touched && price.errors.required)">
+                        <i class="bx bx-radio-circle"></i> Product price is required
+                    </div>
+                    <div [hidden]="!(price.invalid && form.dirty && price.touched && price.errors.min)">
+                        <i class="bx bx-radio-circle"></i> Product price should be greater than 0
+                    </div>
+                    <div [hidden]="!(price.invalid && form.dirty && price.touched && price.errors.max)">
+                        <i class="bx bx-radio-circle"></i> Product price should be lesser than 1000
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="productcategory">Product category</label>
+                <select class="form-control" id="productcategory" formControlName="category" [ngClass]="{'is-invalid': category.invalid && category.touched}">
+                <option *ngFor="let item of categories" [value]="item.id"> {{ item.category }}</option>
+                  </select>
+
+                <div class="invalid-feedback">
+                    <div [hidden]="!(category.invalid && form.dirty && category.touched && category.errors.required)">
+                        <i class="bx bx-radio-circle"></i> Product category is required
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="productdescription">Product Description</label>
+                <textarea class="form-control" id="productdescription" formControlName="description" rows="3"></textarea>
+            </div>
+
+            <button type="button" class="btn btn-primary mr-2" (click)="doAddProduct(form)"> 
+                {{ form.get('id').value == 0 ? "Create Product" : "Update Product" }}
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="doReset()">Reset</button>
+        </fieldset>
+    </form>
+</div>
